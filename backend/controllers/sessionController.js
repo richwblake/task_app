@@ -4,8 +4,8 @@ const user = {
 };
 
 const login = (req, res) => {
-    const submittedUser = req.body.uname;
-    const submittedPass = req.body.pass;
+    const submittedUser = req.body.username;
+    const submittedPass = req.body.password;
 
     if (req.session.user_id) {
         res.status(200).json({ message: 'Already authenticated' }); 

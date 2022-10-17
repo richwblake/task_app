@@ -1,0 +1,14 @@
+#form-container {
+	border: 1px solid black;
+	padding: 1rem;
+	width: fit-content;
+	text-align: center;
+	margin: 0 auto;
+
+}
+
+header h1 {
+	margin: .5rem auto;
+	width: fit-content;
+}
+}
