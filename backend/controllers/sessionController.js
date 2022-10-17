@@ -16,7 +16,7 @@ const login = (req, res) => {
                 req.session.user_id = 19;
                 req.session.save(err => {
                     if (err) next(err);
-                    res.status(201).json({ message: 'Login request granted' });
+					res.status(201).json({ message: `Welcome back, ${user.name}`, user: { name: user.name } });
                 });
             });
         }
@@ -28,7 +28,7 @@ const login = (req, res) => {
 
 const check = (req, res) => {
     if (req.session.user_id) 
-        res.status(200).json({ message: 'Authenticated' });
+		res.status(200).json({ message: 'Authenticated', user: { name: user.name } });
 };
 
 module.exports = {
