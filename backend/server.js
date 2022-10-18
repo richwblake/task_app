@@ -9,6 +9,12 @@ const cors = require('cors');
 const session = require('express-session');
 const logger = require('./middleware/logger');
 
+// Create redis store and connect to express session
+const RedisStore = require('connect-redis')(session);
+const { createClient } = require('redis');
+const redisClient = createClient({ legacyMode: true });
+redisClient.connect().catch(console.error);
+
 // Port constant TODO: Move to config/.env file
 const port = 3000;
 
@@ -21,6 +27,7 @@ app.use(express.json());
 
 // Configure app to use session cookies. Data is stored server-side, with session id stored on cookie
 app.use(session({
+	store: new RedisStore({ client: redisClient }),
     name: 'server_side_cookie',
     secret: 'secret_string',
     path: '/',
@@ -40,7 +47,7 @@ app.use(logger.log);
 
 // Use routes defined in routes folder
 app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api', require('./routes/sessionRoutes'));
+app.use('/api/auth/', require('./routes/sessionRoutes'));
 
 
 app.listen(port, () => {
