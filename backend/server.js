@@ -5,6 +5,10 @@ const app = express();
 // Import cors
 const cors = require('cors');
 
+// import database connect function
+const { connect } = require('./db/connect');
+connect();
+
 // server-side session and request information logging middleware
 const session = require('express-session');
 const logger = require('./middleware/logger');
@@ -47,9 +51,10 @@ app.use(logger.log);
 
 // Use routes defined in routes folder
 app.use('/api/tasks', require('./routes/taskRoutes'));
-app.use('/api/auth/', require('./routes/sessionRoutes'));
+app.use('/api/auth', require('./routes/sessionRoutes'));
+app.use('/api/users', require('./routes/userRoutes'));
 
 
 app.listen(port, () => {
-    console.log(`Example app started on port ${port}`);
+    console.log(`Task API started on port ${port}`);
 });
